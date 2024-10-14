@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 빈으로 등록하기 위한 작업.(풀패키지명을 등록해야 함) id를 직접 지정하지 않으면 알아서 맨 앞 대문자를 소문자로 바꾼 형태로 지정됨 -->
+	<bean class="com.ssafy.di.Desktop" id="desktop"></bean>
+	<bean class="com.ssafy.di.Programmer" id="programmer"></bean>
+</beans>
+

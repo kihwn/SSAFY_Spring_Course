@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 빈으로 등록하기 위한 작업.(풀패키지명을 등록해야 함) id를 직접 지정하지 않으면 알아서 맨 앞 대문자를 소문자로 바꾼 형태로 지정됨 -->
+	<bean class="com.ssafy.di.Desktop" id="desktop"></bean>
+	
+	<!-- 생성자 주입 : 관련한 생성자가 있어야 함 -->
+	<bean class="com.ssafy.di.Programmer" id="programmer">
+		<constructor-arg ref="desktop"></constructor-arg>
+	</bean>
+	
+	<!-- 설정자 주입 : 단, 기본 생성자가 있어야 함. -->
+	<bean class="com.ssafy.di.Programmer" id="programmerSetter">
+	<!-- name은 set~~에서 ~~에 해당하는 이름. 맨앞 대문자만 소문자로 변경. -->
+		<property name="computer" ref="desktop"></property>
+	</bean>
+</beans>
+
