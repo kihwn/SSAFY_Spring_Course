@@ -1,12 +1,15 @@
 package com.ssafy.mvc.view;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,12 +32,23 @@ public class FileDownloadView extends AbstractView {
 		Resource resource = resourceLoader.getResource("classpath:/static/img");
 		File file = new File(resource.getFile(),fileName);
 		
+		
+		
 		////여기까지 사전 준비////
 		fileName = new String(fileName.getBytes("UTF-8"),"ISO-8859-1"); //혹시 여러 언어 중에 utf-8로 인코딩 안되는 게 있을까봐 ISO-8859방식도 덧붙여줌.
 		//약속처럼 쓰는 것
 		response.setHeader("Content-Disposition", "attachment; fileName=\""+fileName+"\";");
+		response.setHeader("Content-Transfer-Encoding", "binary"); //응답 객체에게 binary 구조라는 것을 알려 줌 
+		
+		////////////////////////////////////여기까지가 응답 Header 설정/////////////////////////////////////////////
+		//ex ) resources/static/img/리트리버.jpg를 가져올 연결 통로를 만들겠다는 의미
+		try (FileInputStream fis = new FileInputStream(file); OutputStream os = response.getOutputStream();) {
+			FileCopyUtils.copy(fis, os);
+		}
+			
+		}
 	}
 	
 	
 
-}
+

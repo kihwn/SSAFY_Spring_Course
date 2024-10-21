@@ -47,16 +47,33 @@ public class FileController {
 			model.addAttribute("fileName",fileName);
 		}
 		return "result"; //데이터가 넘어 옴.
-		
 	}
 	
 	@GetMapping("/download")
 	public String fileDownload(@RequestParam("fileName") String fileName, Model model) {
-		//파일 다운로드 시에는 화면이 변경 되는 게 아니라 화면은 그대로 있는 상태에서 파일만 저장되는 형태
-		model.addAttribute("fileName",fileName);
-		//return의 의미 - > 앞에 webapp/WEB-INF/views를 붙이고 해당 이름의 jsp를 찾아가!
+		model.addAttribute("fileName", fileName);
 		return "fileDownloadView";
+	}
+
+	
+	@GetMapping("/multiFileForm")
+	public String multiFileForm() {
+		return "multiFileForm";
+	}
+	
+	
+	
+	@PostMapping("/multiFileUpload")
+	public String multiFileUpload(@RequestParam("files") MultipartFile[] files, Model model)
+			throws IllegalStateException, IOException {
 		
+		for(MultipartFile file : files) {
+			System.out.println(file.getOriginalFilename());
+		}
+		
+		
+		
+		return "result";
 	}
 
 }
